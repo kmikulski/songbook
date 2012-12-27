@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="wrap_content">
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:paddingLeft="8dip" android:paddingRight="8dip">
+
+			<TextView android:id="@+id/song_title" android:layout_width="match_parent"
+				android:layout_height="wrap_content" style="@android:style/TextAppearance.Large"
+				android:paddingBottom="12dip" />
+
+			<TextView android:id="@+id/song_content"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_below="@id/song_title" android:paddingBottom="12dip"
+				android:background="#EC7703" />
+
+			<TextView android:id="@+id/song_chords"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_below="@id/song_title" android:layout_toRightOf="@id/song_content"
+				android:paddingBottom="12dip" android:background="#0377EC" />
+
+			<!-- android:textSize="10dip" -->
+		</RelativeLayout>
+	</ScrollView>
+</HorizontalScrollView>
