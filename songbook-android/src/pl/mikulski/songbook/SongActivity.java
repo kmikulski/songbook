@@ -49,12 +49,12 @@ public class SongActivity extends Activity {
 		if(fontSize > 0) {
 			content.setTextSize(content.getTextSize() * 1.2f);
 			if(chords != null) {
-				chords.setTextSize(content.getTextSize());
+				chords.setTextSize(chords.getTextSize() * 1.2f);
 			}
 		} else if(fontSize < 0) {
 			content.setTextSize(content.getTextSize() * 0.8f);
 			if(chords != null) {
-				chords.setTextSize(content.getTextSize());
+				chords.setTextSize(chords.getTextSize() * 0.8f);
 			}
 		}
 
