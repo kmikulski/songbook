@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<CheckBoxPreference android:key="pref_show_chords"
+		android:title="Pokaż akordy" />
+	
+	<ListPreference
+			android:title="Rozmiar tekstu"
+            android:key="pref_font_size"
+            android:defaultValue="0"
+            android:entries="@array/fontSizeNames"
+            android:entryValues="@array/fontSizeValues">
+	</ListPreference>
+
+</PreferenceScreen>
