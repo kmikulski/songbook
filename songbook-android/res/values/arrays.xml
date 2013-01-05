@@ -13,5 +13,17 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    
+    <string-array name="displayModeNames">
+        <item>Tylko tekst</item>
+        <item>Zmieść tekst i akordy</item>
+        <item>Przewijaj tekst i akordy</item>
+    </string-array>
+
+    <string-array name="displayModeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 
 </resources>

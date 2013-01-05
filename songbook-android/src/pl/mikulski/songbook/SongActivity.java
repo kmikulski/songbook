@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.TextUtils.TruncateAt;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class SongActivity extends Activity {
@@ -16,44 +13,52 @@ public class SongActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.song_chords_compressed);
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		boolean showChords = prefs.getBoolean(SettingsActivity.PREFERENCES_SHOW_CHORDS, false);
-		int fontSize = Integer.parseInt(prefs.getString(SettingsActivity.PREFERENCES_FONT_SIZE, "0"));
+
+		int fontSize = Integer.parseInt(prefs
+				.getString(SettingsActivity.PREFERENCES_FONT_SIZE, "0"));
+		int displayMode = Integer.parseInt(prefs.getString(
+				SettingsActivity.PREFERENCES_DISPLAY_MODE, "0"));
 
 		Intent intent = this.getIntent();
 		Song song = (Song) intent.getSerializableExtra(Song.DATA_NAME);
 
-		TextView content = (TextView) this.findViewById(R.id.song_content);
+		switch (displayMode) {
+		case 0:
+			setContentView(R.layout.song_text_only);
+			break;
+		case 1:
+			setContentView(R.layout.song_chords_compressed);
+			break;
+		case 2:
+			setContentView(R.layout.song_chords_scrollable);
+			break;
+		default:
+			setContentView(R.layout.song_text_only);
+			break;
+		}
 
-		((TextView) this.findViewById(R.id.song_title)).setText(song.getTitle());
+		TextView title = (TextView) this.findViewById(R.id.song_title);
+		TextView content = (TextView) this.findViewById(R.id.song_content);
+		TextView chords = null;
+
+		title.setText(song.getTitle());
 		content.setText(song.getContent());
 
-		TextView chords = null;
-		
-		if (showChords) {
-			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,
-					1.0f);
-			chords = new TextView(this);
+		if (displayMode > 0) {
+			chords = (TextView) this.findViewById(R.id.song_chords);
 			chords.setText(song.getChords());
-			chords.setPadding(10, 0, 0, 0);
-			content.setHorizontallyScrolling(true);
-			content.setEllipsize(TruncateAt.END);
-			content.setLayoutParams(layoutParams);
-			((ViewGroup) this.findViewById(R.id.content_wrapper)).addView(chords);
 		}
-		
-		if(fontSize > 0) {
+
+		if (fontSize > 0) {
 			content.setTextSize(content.getTextSize() * 1.2f);
-			if(chords != null) {
+			if (chords != null) {
 				chords.setTextSize(chords.getTextSize() * 1.2f);
 			}
-		} else if(fontSize < 0) {
+		} else if (fontSize < 0) {
 			content.setTextSize(content.getTextSize() * 0.8f);
-			if(chords != null) {
+			if (chords != null) {
 				chords.setTextSize(chords.getTextSize() * 0.8f);
 			}
 		}

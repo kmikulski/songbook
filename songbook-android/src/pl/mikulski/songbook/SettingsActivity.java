@@ -8,6 +8,7 @@ public class SettingsActivity extends PreferenceActivity {
 	public static final String PREFERENCES_NAME = "pl.mikulski.songbook_preferences";
 	
 	public static final String PREFERENCES_SHOW_CHORDS = "pref_show_chords";
+	public static final String PREFERENCES_DISPLAY_MODE = "pref_display_mode";
 	public static final String PREFERENCES_FONT_SIZE = "pref_font_size";
 	
 	@Override

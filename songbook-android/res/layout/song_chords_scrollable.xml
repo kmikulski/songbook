@@ -14,15 +14,13 @@
 
 			<TextView android:id="@+id/song_content"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:layout_below="@id/song_title" android:paddingBottom="12dip"
-				android:background="#EC7703" />
+				android:layout_below="@id/song_title" android:paddingBottom="12dip" />
 
 			<TextView android:id="@+id/song_chords"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:layout_below="@id/song_title" android:layout_toRightOf="@id/song_content"
-				android:paddingBottom="12dip" android:background="#0377EC" />
+				android:paddingBottom="12dip" />
 
-			<!-- android:textSize="10dip" -->
 		</RelativeLayout>
 	</ScrollView>
 </HorizontalScrollView>
