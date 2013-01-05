@@ -2,7 +2,9 @@
 <resources>
 
     <string name="app_name">Pieśniczek</string>
-    <string name="hello_world">Hello world!</string>
+    
     <string name="menu_settings">Ustawienia</string>
+    
+    <string name="error_title_not_found">Nie znaleziono tytułu: %1$s</string>
 
 </resources>

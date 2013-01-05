@@ -16,12 +16,12 @@ public class SongActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.song_compressed);
+		setContentView(R.layout.song_chords_compressed);
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		boolean showChords = prefs.getBoolean(Constants.PREFERENCES_SHOW_CHORDS, false);
-		int fontSize = Integer.parseInt(prefs.getString(Constants.PREFERENCES_FONT_SIZE, "0"));
+		boolean showChords = prefs.getBoolean(SettingsActivity.PREFERENCES_SHOW_CHORDS, false);
+		int fontSize = Integer.parseInt(prefs.getString(SettingsActivity.PREFERENCES_FONT_SIZE, "0"));
 
 		Intent intent = this.getIntent();
 		Song song = (Song) intent.getSerializableExtra(Song.DATA_NAME);

@@ -7,6 +7,7 @@ public class Song implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String TABLE_SONGS = "songs";
+	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_TITLE = "title";
 	public static final String COLUMN_CONTENT = "content";
 	public static final String COLUMN_CHORDS = "chords";

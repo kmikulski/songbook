@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
+import java.util.TreeMap;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,7 +14,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
 	private static String DB_NAME = "songbook.db";
 	private static String DB_PATH = "/data/data/pl.mikulski.songbook/databases/" + DB_NAME;
@@ -21,7 +23,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 
-	public DatabaseHandler(Context context) {
+	public DatabaseHelper(Context context) {
 		super(context, DB_NAME, null, 1);
 		this.context = context;
 		initDatabase();
@@ -86,8 +88,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	}
 
-	public Cursor getAllSongs() {
-		return db.rawQuery("select * from songs order by " + Song.COLUMN_TITLE, null);
+	public Map<String, Integer> getAllSongs() {
+		Cursor cursor = db.query(Song.TABLE_SONGS,
+				new String[] { Song.COLUMN_TITLE, Song.COLUMN_ID }, null, null, null, null, null);
+		Map<String, Integer> songs = new TreeMap<String, Integer>();
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			String title = cursor.getString(0);
+			Integer id = cursor.getInt(1);
+			songs.put(title, id);
+			cursor.moveToNext();
+		}
+		return songs;
 	}
 
 	public Song getSong(long id) {
@@ -101,4 +113,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		String chords = cursor.getString(2);
 		return new Song(title, contents, chords);
 	}
+
 }
