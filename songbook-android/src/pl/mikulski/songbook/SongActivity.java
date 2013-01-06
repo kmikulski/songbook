@@ -1,14 +1,19 @@
 package pl.mikulski.songbook;
 
 import pl.mikulski.songbook.db.Song;
+import pl.mikulski.songbook.transposer.Transposer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class SongActivity extends Activity {
+
+	private Song song;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,7 @@ public class SongActivity extends Activity {
 				SettingsActivity.PREFERENCES_DISPLAY_MODE, "0"));
 
 		Intent intent = this.getIntent();
-		Song song = (Song) intent.getSerializableExtra(Song.DATA_NAME);
+		song = (Song) intent.getSerializableExtra(Song.DATA_NAME);
 
 		switch (displayMode) {
 		case 0:
@@ -63,6 +68,36 @@ public class SongActivity extends Activity {
 			}
 		}
 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.song, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
+		case R.id.menu_transpose:
+			new TransposeDialog(this, Transposer.getInitialChord(song.getChords())).show();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	public void transpose(int interval) {
+		if (song != null) {
+			String transposed = Transposer.transpose(song.getChords(), interval);
+			song.setChords(transposed);
+			TextView view = (TextView) this.findViewById(R.id.song_chords);
+			if (view != null) {
+				view.setText(transposed);
+			}
+		}
 	}
 
 }

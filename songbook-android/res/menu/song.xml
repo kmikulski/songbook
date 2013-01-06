@@ -4,5 +4,10 @@
         android:id="@+id/menu_settings"
         android:showAsAction="ifRoom"
         android:title="@string/menu_settings"/>
+        
+    <item
+        android:id="@+id/menu_transpose"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_transpose"/>
 
 </menu>

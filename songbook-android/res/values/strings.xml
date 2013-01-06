@@ -4,6 +4,9 @@
     <string name="app_name">Pieśniczek</string>
     
     <string name="menu_settings">Ustawienia</string>
+    <string name="menu_transpose">Transponuj</string>
+    <string name="menu_ok">OK</string>
+    <string name="menu_cancel">Anuluj</string>
     
     <string name="error_title_not_found">Nie znaleziono tytułu: %1$s</string>
 
