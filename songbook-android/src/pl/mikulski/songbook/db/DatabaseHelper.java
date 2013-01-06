@@ -14,6 +14,11 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Helper class to abstract the database layer
+ * 
+ * @author KM
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	private static String DB_NAME = "songbook.db";
@@ -32,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	/**
 	 * Initialise the database field, if necessary create the database and copy
 	 * contents from assets
-	 * */
+	 */
 	public void initDatabase() {
 		try {
 			this.db = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
@@ -43,6 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		if (this.db == null) {
 			try {
 				this.db = this.getReadableDatabase();
+				// copy initial data from file bundled with app
 				copyDatabaseFromAssets();
 			} catch (IOException e) {
 				Log.e(this.getClass().getName(), "unable to seed database from assets", e);
@@ -50,6 +56,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
+	/**
+	 * Overwrite database file with the file bundled in the assets
+	 * 
+	 * @throws IOException
+	 *             if anything goes wrong, rethrow so we can handle it later
+	 */
 	private void copyDatabaseFromAssets() throws IOException {
 		InputStream myInput = null;
 		OutputStream myOutput = null;
@@ -82,12 +94,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		// do nothing
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// do nothing
 	}
 
+	/**
+	 * Retrieve a mapping of titles to ids for use in main list activity
+	 * 
+	 * @return map of titles to ids containing all songs
+	 */
 	public Map<String, Integer> getAllSongs() {
 		Cursor cursor = db.query(Song.TABLE_SONGS,
 				new String[] { Song.COLUMN_TITLE, Song.COLUMN_ID }, null, null, null, null, null);
@@ -102,6 +121,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return songs;
 	}
 
+	/**
+	 * Retrieve a single song by id
+	 * 
+	 * @param id
+	 *            identifier of the song to be retrieved
+	 * @return song object or null if id not found
+	 */
 	public Song getSong(long id) {
 		Cursor cursor = db.query(Song.TABLE_SONGS, new String[] { Song.COLUMN_TITLE,
 				Song.COLUMN_CONTENT, Song.COLUMN_CHORDS }, "_id = " + id, null, null, null, null);

@@ -2,6 +2,11 @@ package pl.mikulski.songbook.db;
 
 import java.io.Serializable;
 
+/**
+ * DTO bean class representing a song
+ * 
+ * @author KM
+ */
 public class Song implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -11,6 +16,7 @@ public class Song implements Serializable {
 	public static final String COLUMN_TITLE = "title";
 	public static final String COLUMN_CONTENT = "content";
 	public static final String COLUMN_CHORDS = "chords";
+	// to identify data in intents
 	public static final String DATA_NAME = Song.class.getName();
 
 	private String title;

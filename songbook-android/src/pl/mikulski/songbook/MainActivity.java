@@ -19,6 +19,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Main application activity representing the list of available songs
+ * 
+ * @author KM
+ */
 public class MainActivity extends ListActivity {
 
 	private DatabaseHelper db;
@@ -32,15 +37,20 @@ public class MainActivity extends ListActivity {
 		final Handler handler = new Handler();
 		setContentView(R.layout.main);
 
+		// delegate database operations to a background thread
 		new Thread() {
 			public void run() {
 				if (db == null) {
 					db = new DatabaseHelper(MainActivity.this);
 				}
 				songs = db.getAllSongs();
+				// after retrieving data from db, post list update
+				// for execution in UI thread
 				handler.post(new Runnable() {
 					public void run() {
 						String[] items = songs.keySet().toArray(new String[0]);
+						// using ArrayAdapter instead of CursorAdapter allows
+						// for filtering list without requerying the db
 						adapter = new ArrayAdapter<String>(MainActivity.this,
 								android.R.layout.simple_list_item_1, items);
 						setListAdapter(adapter);
@@ -59,6 +69,7 @@ public class MainActivity extends ListActivity {
 		String title = ((TextView) v).getText().toString();
 		Integer songId = songs.get(title);
 		if (songId == null) {
+			// should never happen, but just to be on the safe side...
 			Toast.makeText(this, getString(R.string.error_title_not_found, title),
 					Toast.LENGTH_SHORT).show();
 			return;
@@ -85,6 +96,9 @@ public class MainActivity extends ListActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * register search textfield for list filtering
+	 */
 	private void setSearchListener() {
 		EditText search = (EditText) this.findViewById(R.id.search);
 		search.addTextChangedListener(new TextWatcher() {

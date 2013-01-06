@@ -14,8 +14,14 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+/**
+ * Dialog for selecting transposition interval in SongActivity
+ * 
+ * @author KM
+ */
 public class TransposeDialog extends Dialog {
 
+	// list of values for use by spinner adapter
 	private static final ArrayList<String> VALUES_MAJOR = new ArrayList<String>();
 	private static final ArrayList<String> VALUES_MINOR = new ArrayList<String>();
 
@@ -28,7 +34,9 @@ public class TransposeDialog extends Dialog {
 		}
 	}
 
+	// activity calling the dialog
 	private SongActivity host;
+	// initial chord of the current song
 	private Chord initialChord;
 
 	public TransposeDialog(SongActivity host, Chord initialChord) {
@@ -40,9 +48,11 @@ public class TransposeDialog extends Dialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// do not display title bar on dialog
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.dialog_transpose);
 		final Spinner spinner = (Spinner) findViewById(R.id.transpose_spinner);
+		// populate the spinner and set it for correct chord
 		spinner.setAdapter(new ArrayAdapter<String>(getContext(),
 				android.R.layout.simple_spinner_dropdown_item,
 				initialChord.isMajor() ? VALUES_MAJOR : VALUES_MINOR));

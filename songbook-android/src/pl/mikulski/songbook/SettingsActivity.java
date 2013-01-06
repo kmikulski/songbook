@@ -3,6 +3,11 @@ package pl.mikulski.songbook;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
+/**
+ * Default activity for preferences management
+ * 
+ * @author KM
+ */
 public class SettingsActivity extends PreferenceActivity {
 	
 	public static final String PREFERENCES_NAME = "pl.mikulski.songbook_preferences";

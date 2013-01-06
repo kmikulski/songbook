@@ -11,6 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/**
+ * Activity for song details presentation
+ * 
+ * @author KM
+ */
 public class SongActivity extends Activity {
 
 	private Song song;
@@ -21,6 +26,8 @@ public class SongActivity extends Activity {
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+		// cannot use integer-array in preferences due to android bug
+		// http://code.google.com/p/android/issues/detail?id=2096
 		int fontSize = Integer.parseInt(prefs
 				.getString(SettingsActivity.PREFERENCES_FONT_SIZE, "0"));
 		int displayMode = Integer.parseInt(prefs.getString(
@@ -29,6 +36,7 @@ public class SongActivity extends Activity {
 		Intent intent = this.getIntent();
 		song = (Song) intent.getSerializableExtra(Song.DATA_NAME);
 
+		// use appropriate layout depending on preferences
 		switch (displayMode) {
 		case 0:
 			setContentView(R.layout.song_text_only);
@@ -56,6 +64,7 @@ public class SongActivity extends Activity {
 			chords.setText(song.getChords());
 		}
 
+		// alter font size depending on preferences
 		if (fontSize > 0) {
 			content.setTextSize(content.getTextSize() * 1.2f);
 			if (chords != null) {
@@ -89,6 +98,12 @@ public class SongActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Transpose chords by a given interval, updating the display
+	 * 
+	 * @param interval
+	 *            number of semitones by which to transpose
+	 */
 	public void transpose(int interval) {
 		if (song != null) {
 			String transposed = Transposer.transpose(song.getChords(), interval);
